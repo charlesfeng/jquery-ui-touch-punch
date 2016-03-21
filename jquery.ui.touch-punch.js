@@ -81,6 +81,7 @@
 
     // Track movement to determine if interaction was a click
     self._touchMoved = false;
+    self._startedMove = event.timeStamp;
 
     // Simulate the mouseover event
     simulateMouseEvent(event, 'mouseover');
@@ -128,7 +129,8 @@
     simulateMouseEvent(event, 'mouseout');
 
     // If the touch interaction did not move, it should trigger a click
-    if (!this._touchMoved) {
+    var timeMoving = event.timeStamp - this._startedMove;
+    if (!this._touchMoved || timeMoving < 500) {
 
       // Simulate the click event
       simulateMouseEvent(event, 'click');
